@@ -1,32 +1,57 @@
 #!/bin/bash
 
+# Couleurs
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
 # Tentatives de mot de passe
 attempts=0
 password="YAMAV1"
 
-until [ $attempts -ge 3 ]
-do
+# Authentification avec insulte après 3 échecs
+while [ $attempts -lt 3 ]; do
     clear
-    echo -e "\e[1;31m═══════════════════════════════════════"
-    echo -e "\e[1;37m        Accès à \e[1;36mGRIMM-X"
-    echo -e "\e[1;31m═══════════════════════════════════════"
-    read -s -p $'\e[1;33mEntrez le mot de passe : \e[0m' pass
-    echo
+    echo -e "${YELLOW}Bienvenue dans GRIMM-X${NC}"
+    echo -ne "\nEntrer le mot de passe : "
+    read -s input_password
 
-    if [[ "$pass" == "$password" ]]; then
+    if [ "$input_password" == "$password" ]; then
         break
     else
-        insults=("Gyet manmanw" "Fils de pute" "Yon mots de passe est inconrrect" "Ah pase kk" "Ou est con ou bien ?")
-        echo -e "\e[1;31m${insults[$attempts]}\e[0m"
+        insults=("Gyet manmanw" "Fils de pute" "Ton mots de passe est inconrrect" "Ah pase kk")
+        echo -e "\n${RED}${insults[$attempts]}${NC}"
         sleep 2
         ((attempts++))
     fi
 done
 
 if [ $attempts -ge 3 ]; then
-    echo -e "\e[1;31mAccès refusé. T’as échoué 3 fois. Al fè jefò sou tèt ou.\e[0m"
-    exit
+    echo -e "\n${RED}Accès refusé. T’as échoué 3 fois. Degage...${NC}"
+    exit 1
 fi
+
+# Logo YAMA
+clear
+echo -e "${GREEN}"
+echo "██╗   ██╗ █████╗ ███╗   ███╗ █████╗ "
+echo "██║   ██║██╔══██╗████╗ ████║██╔══██╗"
+echo "██║   ██║███████║██╔████╔██║███████║"
+echo "██║   ██║██╔══██║██║╚██╔╝██║██╔══██║"
+echo "╚██████╔╝██║  ██║██║ ╚═╝ ██║██║  ██║"
+echo " ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝"
+echo -e "${NC}"
+echo -e "${YELLOW}Tools créé par Zephyr and EMPEROR SUKUNA${NC}"
+
+# Chargement stylé
+echo -ne "\n${YELLOW}Chargement"
+for i in {1..5}; do
+    echo -n "."
+    sleep 0.5
+done
+echo -e "${GREEN} [OK]${NC}"
+sleep 1
 
 # Bannière principale
 banner() {
